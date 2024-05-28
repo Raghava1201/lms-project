@@ -57,7 +57,6 @@ pipeline {
         }
         stage('connecting to backend') {
             steps {
-                sh 'cd lms-project_dev/api'
                 sh 'npm install'
                 sh'sudo npx prisma db push'
                 
