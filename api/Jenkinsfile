@@ -1,23 +1,13 @@
 pipeline {
     agent {
         node {
-            label 'slave'
+            label 'slave-dev'
         }
     }
-    environment {
-        dockerhub = credentials('dockerhub')
-        deployBranch = 'main' // define your branch here
-        deployService = 'api-service' // define your service here
-    }
     stages {
-        stage('slack-notification') {
+        stage('clone code') {
             steps {
-                slackSend channel: 'devops',
-                    color: '439FE0',
-                    message: "started ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>)",
-                    teamDomain: 'dl-muraliworkspace',
-                    tokenCredentialId: 'slack',
-                    username: 'jenkins'
+                sh 'git clone -b dev '
             }
         }
         stage('scanning-backend') {
