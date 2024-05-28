@@ -57,6 +57,7 @@ pipeline {
         }
         stage('modify .env') {
             steps {
+                sh 'cd lms/api'
                 sh 'sed -i 's/password@172.18.0.2/admin123@localhost/g' .env'
             }
         }
