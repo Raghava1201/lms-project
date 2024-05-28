@@ -11,13 +11,13 @@ pipeline {
                     color: '439FE0',
                     message: "started ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>)",
                     teamDomain: 'raghava-world',
-                    tokenCredentialId: 'slack',
+                    tokenCredentialId: 'slack3',
                     username: 'jenkins'
             }
         }
         stage('scanning-backend') {
             steps {
-               sh 'cd api && docker run --rm -e SONAR_HOST_URL="http://107.20.21.174:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms-be" -e SONAR_TOKEN="sqp_cc2952fc7aabc82d2506e818d3f1c7ae762f910a" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
+               sh 'cd api && docker run --rm -e SONAR_HOST_URL="http://34.201.119.240:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms-be" -e SONAR_TOKEN="sqp_cc2952fc7aabc82d2506e818d3f1c7ae762f910a" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
           }
         }
         stage('Approval') {
