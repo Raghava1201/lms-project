@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Approval') {
             steps {
-                emailext subject: "Deployment Approval for $deployBranch branch and $deployService service",
+                emailext subject: "Deployment Approval for lms service",
                     body: "<a href='${JENKINS_URL}/job/${JOB_NAME}/${BUILD_NUMBER}/input'>click to approve</a>",
                     to: 'machirajuraghavarao@gmail.com',
                     mimeType: 'text/html',
