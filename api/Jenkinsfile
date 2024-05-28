@@ -58,7 +58,7 @@ pipeline {
         stage('connecting to backend') {
             steps {
                 sh 'pwd'
-                sh 'cd api'
+                sh 'cd api/'
                 sh 'pwd'
                 sh 'npm install'
                 sh 'pwd'
