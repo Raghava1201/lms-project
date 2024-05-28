@@ -4,12 +4,7 @@ pipeline {
             label 'slave-dev'
         }
     }
-    stages {
-        stage('clone code') {
-            steps {
-                sh 'git clone -b dev https://github.com/Raghava1201/lms-project.git'
-            }
-        }  
+    stages { 
         stage('slack-notification') {
             steps {
                 slackSend channel: 'devops',
