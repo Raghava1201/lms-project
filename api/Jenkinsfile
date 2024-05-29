@@ -57,13 +57,12 @@ pipeline {
         }
         stage('connecting to backend') {
             steps {
-                sh 'pwd'
-                sh 'cd api/'
+                dir('api'){
                 sh 'pwd'
                 sh 'npm install'
                 sh 'pwd'
                 sh'sudo npx prisma db push'
-                
+                }
             }
         }
         stage('build') {
