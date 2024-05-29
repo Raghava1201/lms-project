@@ -68,9 +68,11 @@ pipeline {
         }
          stage('Deploying in web server') {
             steps {
+                dir('webapp'){
                 sh 'sudo rm -rf /var/www/html/*'
                 sh 'sudo cp -rf dist/* /var/www/html/'
                 sh 'sudo systemct restart nginx'
+              }      
             }
         }
     }
