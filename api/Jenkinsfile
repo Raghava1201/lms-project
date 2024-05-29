@@ -17,7 +17,7 @@ pipeline {
         }
         stage('scanning-backend') {
             steps {
-               sh 'cd api && docker run --rm -e SONAR_HOST_URL="http://44.223.26.194:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms-be" -e SONAR_TOKEN="sqp_cc2952fc7aabc82d2506e818d3f1c7ae762f910a" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
+               sh 'cd api && docker run --rm -e SONAR_HOST_URL="http://100.27.215.34:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms-be" -e SONAR_TOKEN="sqp_e1b0ab7a61f6fb542f25906558f2b0a83ba39ee8" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
           }
         }
         stage('Approval') {
