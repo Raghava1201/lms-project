@@ -56,12 +56,8 @@ pipeline{
         }
         stage('Configure AWS CLI') {
             steps {
-                script {
-                    withAWS(region: "${AWS_DEFAULT_REGION}", credentials: "${AWS_CREDENTIALS}") {
-                        sh 'aws eks update-kubeconfig --name lms-eks-cluster --region us-east-1'
-                    }
-                }
-            }
+                sh 'aws eks update-kubeconfig --name lms-eks-cluster --region us-east-1'
+             }
         }
         stage('Deploy to eks'){
            steps{
