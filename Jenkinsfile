@@ -22,14 +22,15 @@ pipeline{
         }
         stage('scanning-backend') {
             steps {
-               sh 'docker run --rm -e SONAR_HOST_URL="http://35.175.129.151:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms" -e SONAR_TOKEN="sqp_148815786086b7d65df941e316fb51a6db390406" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
-          }
+               sh 'cd api && docker run --rm -e SONAR_HOST_URL="http://35.175.129.151:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms-be" -e SONAR_TOKEN="sqp_433889067ad70cf50e85619c9cc6771b1f7a0c0b" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
+               sh 'cd webapp && docker run --rm -e SONAR_HOST_URL="http://35.175.129.151:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms-fe" -e SONAR_TOKEN="sqp_ca6ae07ebca3139ebffaf24cc25414a31e8be356" -v ".:/usr/src" sonarsource/sonar-scanner-cli' 
+           }
         }
         stage('Approval') {
             steps {
                 emailext subject: "Deployment Approval for lms service",
                     body: "<a href='${JENKINS_URL}/job/${JOB_NAME}/${BUILD_NUMBER}/input'>click to approve</a>",
-                    to: 'machirajuraghavarao@gmail .com',
+                    to: 'machirajuraghavarao@gmail.com',
                     mimeType: 'text/html',
                     attachLog: true
                 script {
