@@ -22,7 +22,7 @@ pipeline{
         }
         stage('scanning-backend') {
             steps {
-               sh 'cd api && docker run --rm -e SONAR_HOST_URL="http://35.175.129.151:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms" -e SONAR_TOKEN="sqp_8443fb9a98b67505e3d9def7d2dfde8ad61e7ef8" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
+               sh 'docker run --rm -e SONAR_HOST_URL="http://35.175.129.151:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms" -e SONAR_TOKEN="sqp_8443fb9a98b67505e3d9def7d2dfde8ad61e7ef8" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
           }
         }
         stage('Approval') {
@@ -63,6 +63,8 @@ pipeline{
            steps{
                sh 'pwd'
                sh 'minikube start'
+               sh 'pwd'
+               sh 'cd k8s'
                sh 'kubectl apply -f pg-secret.yaml'
                sh 'kubectl apply -f pg-deployment.yaml'
                sh 'kubectl apply -f pg-service.yaml'
