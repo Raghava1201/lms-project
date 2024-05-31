@@ -22,12 +22,12 @@ pipeline{
         }
         stage('scanning-backend') {
             steps {
-               sh 'cd api && docker run --rm -e SONAR_HOST_URL="http://35.175.129.95:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms-project" -e SONAR_TOKEN="sqp_25e6c9448bb34bbe2d97888de21fba6eee5d9d5e" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
+               sh 'cd api && docker run --rm -e SONAR_HOST_URL="http://35.175.129.151:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms" -e SONAR_TOKEN="sqp_8443fb9a98b67505e3d9def7d2dfde8ad61e7ef8" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
           }
         }
         stage('Approval') {
             steps {
-                emailext subject: "Deployment Approval for $deployBranch branch and $deployService service",
+                emailext subject: "Deployment Approval for lms service",
                     body: "<a href='${JENKINS_URL}/job/${JOB_NAME}/${BUILD_NUMBER}/input'>click to approve</a>",
                     to: 'machirajuraghavarao@gmail .com',
                     mimeType: 'text/html',
@@ -35,7 +35,7 @@ pipeline{
                 script {
                     def Delay = input id: 'Deploy',
                         message: sh(script: '''echo "You are DEPLOYING -->$deployBranch<-- IN PRODUCTION"''', returnStdout: true).trim(),
-                        submitter: 'uaserID1, userID2',
+                        submitter: 'userID1, userID2',
                         parameters: [
                             [$class: 'ChoiceParameterDefinition',
                                 choices: ['no', 'yes'].join('\n'),
@@ -54,5 +54,28 @@ pipeline{
                 }
             }
         }
-     }
-}   
+        stage('Configure AWS CLI') {
+            steps {
+                script {
+                    withAWS(region: "${AWS_DEFAULT_REGION}", credentials: "${AWS_CREDENTIALS}") {
+                        sh 'aws eks update-kubeconfig --name lms-eks-cluster --region us-east-1'
+                    }
+                }
+            }
+        }
+        stage('Deploy to eks'){
+           steps{
+               sh 'pwd'
+               sh 'minikube start'
+               sh 'kubectl apply -f pg-secret.yaml'
+               sh 'kubectl apply -f pg-deployment.yaml'
+               sh 'kubectl apply -f pg-service.yaml'
+               sh 'kubectl apply -f be-configmap.yaml'
+               sh 'kubectl apply -f be-deployment.yaml'
+               sh 'kubectl apply -f be-service.yaml'
+               sh 'kubectl apply -f fe-deployment.yaml'
+               sh 'kubectl apply -f fe-service.yaml'
+           }
+       }
+    }
+}
