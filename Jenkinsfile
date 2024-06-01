@@ -63,6 +63,7 @@ pipeline{
     stage('Deploy to eks'){
         steps{
             dir('k8s'){
+               sh 'ls -al /home/ubuntu/workspace/lms-project_prod/k8s/'
                sh 'kubectl apply -f pg-secret.yaml'
                sh 'kubectl apply -f pg-deployment.yaml'
                sh 'kubectl apply -f pg-service.yaml'
