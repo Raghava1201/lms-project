@@ -22,8 +22,8 @@ pipeline{
         }
         stage('scanning-backend') {
             steps {
-               sh 'cd api && docker run --rm -e SONAR_HOST_URL="http://100.26.212.167:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms-be" -e SONAR_TOKEN="sqp_0a263d5af67a39324c7b4f9cb361cfa3e1687dcf" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
-               sh 'cd webapp && docker run --rm -e SONAR_HOST_URL="http://100.26.212.167:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms-fe" -e SONAR_TOKEN="sqp_e71c145e96c1c921687ce26c146387716b5b404c" -v ".:/usr/src" sonarsource/sonar-scanner-cli' 
+               sh 'cd api && docker run --rm -e SONAR_HOST_URL="http://100.26.212.167:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms-be" -e SONAR_TOKEN="sqp_c4fbbea7c0c200d60b6f119ad389bf499b5e0ea5" -v ".:/usr/src" sonarsource/sonar-scanner-cli'
+               sh 'cd webapp && docker run --rm -e SONAR_HOST_URL="http://100.26.212.167:9000" -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=lms-fe" -e SONAR_TOKEN="sqp_fe9db088900fd2fe481b6786fd818eae43b07658" -v ".:/usr/src" sonarsource/sonar-scanner-cli' 
            }
         }
         stage('Approval') {
