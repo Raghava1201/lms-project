@@ -64,7 +64,7 @@ pipeline{
         steps{
             dir('k8s'){
                sh 'ls -al /home/ubuntu/workspace/lms-project_prod/k8s/'
-               sh 'kubectl apply -f pg-secret.yml'
+               sh 'kubectl apply -f pg-secret.yml --validate=false'
                sh 'kubectl apply -f pg-deployment.yml'
                sh 'kubectl apply -f pg-service.yml'
                sh 'kubectl apply -f be-configmap.yml'
