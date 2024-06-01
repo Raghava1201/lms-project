@@ -60,7 +60,7 @@ pipeline{
                 sh 'aws eks update-kubeconfig --name lms-eks-cluster --region us-east-1'
              }
         }
-        stage('Deploy to eks'){
+        stage('minikube'){
            steps{
                sh 'pwd'
                sh 'minikube start'
