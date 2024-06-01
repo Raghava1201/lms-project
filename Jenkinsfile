@@ -64,8 +64,11 @@ pipeline{
            steps{
                sh 'pwd'
                sh 'minikube start'
-               sh 'pwd'
-               sh 'cd k8s/'
+           }
+       }
+    stage('Deploy to eks'){
+        steps{
+            dir('k8s'){
                sh 'kubectl apply -f pg-secret.yaml'
                sh 'kubectl apply -f pg-deployment.yaml'
                sh 'kubectl apply -f pg-service.yaml'
@@ -74,7 +77,8 @@ pipeline{
                sh 'kubectl apply -f be-service.yaml'
                sh 'kubectl apply -f fe-deployment.yaml'
                sh 'kubectl apply -f fe-service.yaml'
-           }
-       }
-    }
-}
+            }
+         }
+      }
+   }
+}    
